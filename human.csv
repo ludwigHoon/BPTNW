@@ -1,0 +1,6 @@
+Human,Location,Visit_Frequency,Visit_Duration(s),Vaccination,Age,Pregnancy
+Human1,"Kampung Pasir Simpul,21700 Kuala Berang, Terengganu",3,28800,2,23,0
+Human2,"Kampung Pasir Simpul,21700 Kuala Berang, Terengganu",1,18800,2,45,1
+Human2,"Kampung Teris,21700 Kuala Berang, Terengganu",2,20123,2,54,0
+Human3,"Kampung Paya Akob,21700 Kuala Berang, Terengganu",1,12500,1,65,1
+Human4,"Kampung Katak,21700 Kuala Berang, Terengganu",1,10230,1,12,0

@@ -1,0 +1,6 @@
+Patient,Location,Visit_Frequency,Visit_Duration(s)
+Patient1,"Kampung Pasir Simpul,21700 Kuala Berang, Terengganu",3,28800
+Patient2,"Kampung Pasir Simpul,21700 Kuala Berang, Terengganu",1,18800
+Patient2,"Kampung Teris,21700 Kuala Berang, Terengganu",2,20123
+Patient3,"Kampung Paya Akob,21700 Kuala Berang, Terengganu",1,12500
+Patient4,"Kampung Katak,21700 Kuala Berang, Terengganu",1,10230
