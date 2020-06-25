@@ -1,0 +1,18 @@
+﻿Human,Location,Visit_Frequency,Visit_Duration(s),Vaccination,Age,Pregnancy
+Human1,"Kampung Felcra Bukit Kapah,21700 Kula Berang, Terengganu",1,28800,0,23,1
+Human1,"Kampung Butut,21700 Kuala Berang, Terengganu",1,18800,1,45,0
+Human2,"Kampung Kepah,21700 Kuala Berang, Terengganu",2,20123,0,54,0
+Human3,"Kampung Gaung,21700 Kuala Berang, Terengganu",1,12500,1,65,0
+Human4,"Kampung Teris,21700 Kuala Berang, Terengganu",1,10230,1,12,0
+Human4,"Kampung Gapur,21700 Kuala Berang, Terengganu",2,21600,2,15,0
+Human4,"Kampung Telaga,21700 Kuala Berang Terengganu",1,12600,2,37,1
+Human5,"Kampung Tajin,21700 Kuala Berang, Terengganu",3,37800,2,73,0
+Human5,"Kampung Paya Akob,21700 Kuala Berang, Terengganu",1,14400,1,29,1
+Human5,"Kampung Langgar,21700 Kuala Berang, Terengganu",1,9000,2,8,0
+Human6,"Kampung Chapu,21700 Kuala Berang, Terengganu",1,10800,1,14,0
+Human6,"Kampung Kuala Ping,21700 Kuala Berang, Terengganu",3,21600,1,33,1
+Human7,"Kampung Bukit Kubur,21700 Kuala Berang, Terengganu",2,25200,1,65,0
+Human7,"Kampung Katak,21700 Kuala Berang, Terengganu",1,13320,0,55,0
+Human8,"Kampung Tengkawang,21700 Kuala Berang, Terengganu",1,22680,0,78,0
+Human8,"Kampung Teris,21700 Kuala Berang, Terengganu",2,18000,0,27,1
+Human8,"Kampung Pasir Simpul,21700 Kuala Berang, Terengganu",1,27000,0,1,0
