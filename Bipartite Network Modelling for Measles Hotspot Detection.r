@@ -1,4 +1,5 @@
 location<-read.csv('location.csv')
+names(location)<-c('Location.Address', 'Latitude', 'Longitude', 'Population')
 location
 
 processLocation <- function(raw_location){
@@ -14,10 +15,14 @@ names(locationMarker)<-c('marker', 'Location.Address')
 locationMarker
 
 patient<-read.csv('patient.csv')
+names(patient)<-c('Patient', 'Location', 'Visit_Frequency', 'Visit_Duration.s.')
+patient
 patientM<-merge(patient, locationMarker, by.x='Location', by.y='Location.Address')
 patientM
 
 human<-read.csv('human2.csv')
+human
+names(human)<-c('Human', 'Location', 'Visit_Frequency', 'Visit_Duration.s.', 'Vaccination', 'Age', 'Pregnancy')
 humanM<-merge(human, locationMarker, by.x='Location', by.y='Location.Address')
 humanM
 
@@ -88,19 +93,16 @@ generateDP <- function(locations, patientData){
 }
 
 DP <- generateDP(locationMarker, patientM)
-DP
+class(DP)
 
-generateSL <- function(locations, humanData){
-    n_location = length(unique(locations[,'marker']))
-    dm = matrix(ncol=1, nrow=n_location, data=0)
-    for (i in 1:nrow(humanData)) {
-        loc = as.numeric(unlist(strsplit(as.character(humanData[i,'marker']),'X'))[[2]])
-        dm[loc,1] = dm[loc,1] + 1
-    }
-    return(as.vector(dm))
+generateSL <- function(locationMarker, locationData){
+    temp <- merge(locationMarker, locationData, by.x='Location.Address', by.y='Location.Address')
+    vals <- as.numeric(gsub("X","", temp$marker))
+    temp<-temp[order(vals),]
+    return(as.vector(temp$Population))
 }
 
-SL <- generateSL(locationMarker, humanM)
+SL <- generateSL(locationMarker, location)
 SL
 
 generateLocationNodeParameters <- function(locations, FL, DP, SL){
@@ -135,7 +137,7 @@ lnkMtrxH
 FH <- generateFL(locationMarker, humanM, 'h', TRUE)
 FH
 
-FHM <- generateFL(locationMarker, humanM, 'h', FALSE)
+FHM <- t(generateFL(locationMarker, humanM, 'h', FALSE))
 FHM
 
 generateVp <- function(locations, humanData){
@@ -207,6 +209,38 @@ generatePr <- function(locations, humanData){
 Pr <- generatePr(locationMarker, humanM)
 Pr
 
+locParameters <- c()
+locParameters$n_loc <- length(unique(locationMarker$marker))
+locParameters$Fl <- FL
+locParameters$Dp <- DP
+locParameters$Sl <- SL
+locParameters
+
+humParameters <- c()
+humParameters$n_hum <- length(unique(humanM$Human))
+humParameters$Fh <- FHM
+humParameters$Du <- DU
+humParameters$V <- Vp
+humParameters$As <- As
+humParameters$P <- Pr
+humParameters
+
 generateLinkWeight <- function(locationParameters, humanParameters){
-    
+    n_location = locationParameters$n_loc
+    n_human = humanParameters$n_hum
+    dm = matrix(nrow = n_location, ncol = n_human, data = 0)
+    for (i in 1:n_location){
+        locationSum = locationParameters$Fl[i] + locationParameters$Dp[i] + locationParameters$Sl[i]
+        for (j in 1:n_human){
+            humanSum = humanParameters$Fh[j,i] + humanParameters$Du[j,i] + humanParameters$V[j,i] + humanParameters$As[j,i] + humanParameters$P[j,i]
+            dm[i,j] = locationSum + humanSum
+        }
+    }
+    result <- as.data.frame(dm)
+    row.names(result) <- c(paste("L",1:nrow(result), sep=''))
+    names(result) <- c(paste("H",1:length(names(result)), sep=''))
+    return(result)
 }
+
+linkWeight <- generateLinkWeight(locParameters, humParameters)
+linkWeight
