@@ -254,3 +254,60 @@ generateLinkWeight <- function(locationParameters, humanParameters, linkMatrix){
 
 linkWeight <- generateLinkWeight(locParameters, humParameters, lnkMtrxH)
 linkWeight
+
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+Hub
+
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+Authority
+
+is_square_matrix <- function(A){
+    return(nrow(A)==ncol(A))
+}
+
+eucNorm <- function(A){
+    A <- matrix(A, ncol=1)
+    return(sqrt(colSums(A^2)))
+}
+
+powerMethod <- function(matrix, startVector = NULL, threshold = 1e-6, maxIteration = 100){
+    if (!is_square_matrix(matrix)){
+        stop("'powerMethod()' requires a square numeric matrix")
+    }
+    if (is.null(startVector)){
+        startVector = rep(1, nrow(matrix))
+    }
+    cachedVector = startVector
+    steps = 1
+    vectors <- list(startVector)
+    while(TRUE){
+        v_new = matrix %*% cachedVector
+        # 4.21
+        v_new = v_new/eucNorm(v_new)
+        if (eucNorm(abs(v_new) - abs(cachedVector)) <= threshold){
+            break}
+        cachedVector = v_new
+        steps = steps + 1
+        vectors[[steps]] <- c(v_new)
+        if (steps == maxIteration){
+            break}
+    }
+    lambda = sum((matrix %*% v_new) * v_new)
+    res <- list(iter = steps, vector = v_new, value = lambda)
+    vectors <- do.call(cbind, vectors)
+    colnames(vectors) <- paste0("v", 1:ncol(vectors))
+    res <- c(vector_iterations=list(vectors), res)
+    return(res)
+}
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector) 
+
+as.data.frame(vh[order(vh, decreasing = TRUE),])
+as.data.frame(vp[order(vp, decreasing = TRUE),])
