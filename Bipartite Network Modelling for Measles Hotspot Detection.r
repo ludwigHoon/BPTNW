@@ -225,19 +225,34 @@ humParameters$As <- As
 humParameters$P <- Pr
 humParameters
 
+normalise<-function(parameters){
+    for (c in names(parameters)){
+        if (c!= 'n_loc' && c!='n_hum'){
+            parameters[[`c`]] <- round(((parameters[[`c`]]/max(parameters[[`c`]]))*0.9),digits = 4)
+        }
+    }
+    return(parameters)
+}
+normLocParameters <- normalise(locParameters)
+normLocParameters
+normHumParameters <- normalise(humParameters)
+normHumParameters
+
 generateLinkWeight <- function(locationParameters, humanParameters, linkMatrix){
     n_location = locationParameters$n_loc
     n_human = humanParameters$n_hum
-    for (c in names(locationParameters)){
-        if (c!= 'n_loc'){
-            locationParameters[[`c`]] <- round(((locationParameters[[`c`]]/max(locationParameters[[`c`]]))*0.9),digits = 4)
-        }
-    }
-    for (c in names(humanParameters)){
-        if (c!= 'n_hum'){
-            humanParameters[[`c`]] <- round(((humanParameters[[`c`]]/max(humanParameters[[`c`]]))*0.9),digits = 4)
-        }
-    }
+    
+    #for (c in names(locationParameters)){
+    #    if (c!= 'n_loc'){
+    #        locationParameters[[`c`]] <- round(((locationParameters[[`c`]]/max(locationParameters[[`c`]]))*0.9),digits = 4)
+    #    }
+    #}
+    #for (c in names(humanParameters)){
+    #    if (c!= 'n_hum'){
+    #        humanParameters[[`c`]] <- round(((humanParameters[[`c`]]/max(humanParameters[[`c`]]))*0.9),digits = 4)
+    #    }
+    #}
+    
     dm = matrix(nrow = n_location, ncol = n_human, data = 0)
     for (i in 1:n_location){
         locationSum = locationParameters$Fl[i] + locationParameters$Dp[i] + locationParameters$Sl[i]
@@ -252,7 +267,7 @@ generateLinkWeight <- function(locationParameters, humanParameters, linkMatrix){
     return(result*linkMatrix)
 }
 
-linkWeight <- generateLinkWeight(locParameters, humParameters, lnkMtrxH)
+linkWeight <- generateLinkWeight(normLocParameters, normHumParameters, lnkMtrxH)
 linkWeight
 
 Hub = as.matrix(linkWeight) %*% t(linkWeight)
