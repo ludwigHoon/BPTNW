@@ -406,6 +406,11 @@ location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
+originalHumanRank <- humanRank
+originalLocationRank <- locationRank
+originalHumanRank
+originalLocationRank
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
 linkWeight <- generateLinkWeight(new_normLocParameters, normHumParameters, lnkMtrxH)
@@ -433,45 +438,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wFl.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wFl.csv') # Replace here
-uci_human
-uci_location
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -508,43 +497,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wDP.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wDp.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -581,43 +556,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wSl.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wSl.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -663,43 +624,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wFh.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wFH.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -736,43 +683,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wDu.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wDu.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -809,43 +742,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wV.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wV.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -882,43 +801,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wAs.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wAs.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -955,43 +860,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wP.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wP.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1031,43 +922,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO1.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO1.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1108,43 +985,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO2.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO2.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1185,43 +1048,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO3.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO3.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1263,43 +1112,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO4.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO4.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1342,43 +1177,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO5.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO5.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1422,43 +1243,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO6.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO6.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1502,43 +1309,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO7.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO7.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1577,43 +1370,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO8.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO8.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1652,43 +1431,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO9.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO9.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
@@ -1732,43 +1497,29 @@ humanRank$Human <- row.names(humanRank)
 row.names(humanRank)<-NULL
 locationRank$Location <- row.names(locationRank)
 row.names(locationRank)<-NULL
-names(humanRank) <- c('MHRbmc', 'Human')
-names(locationRank) <- c('MHRbmc', 'Location')
+names(humanRank) <- c('MHRbmc_new', 'Human')
+names(locationRank) <- c('MHRbmc_new', 'Location')
 
 #Human BMC
-humanRank$rank_bmc <- NA
+humanRank$rank_bmc_new <- NA
 order.MHRb<-order(humanRank$MHRb)
-humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank$rank_bmc_new[order.MHRb] <- nrow(humanRank):1
 #humanRank
 
 #Location BMC
-locationRank$rank_bmc <- NA
+locationRank$rank_bmc_new <- NA
 order.MHRb<-order(locationRank$MHRb)
-locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank$rank_bmc_new[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('c_result/authority_wLMO10.csv') #Replace here
-uci_location <- read.csv('c_result/hub_wLMO10.csv') # Replace here
-names(uci_human)<-c("Human", "MHRb")
-names(uci_location)<-c("Location", "MHRb")
+ori_human <- originalHumanRank
+ori_location <- originalLocationRank
 
-#Human UCI
-uci_human$rank_b <- NA
-order.MHRb<-order(uci_human$MHRb)
-uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
-#uci_human
-
-#Location UCI
-uci_location$rank_b <- NA
-order.MHRb<-order(uci_location$MHRb)
-uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
-#uci_location
-
-human_compare_2 <- merge(uci_human, humanRank, by='Human')
-location_compare_2 <- merge(uci_location, locationRank, by='Location')
-human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
-location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2 <- merge(ori_human, humanRank, by='Human')
+location_compare_2 <- merge(ori_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_new
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
