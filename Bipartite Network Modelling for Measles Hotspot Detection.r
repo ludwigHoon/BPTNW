@@ -256,9 +256,12 @@ generateLinkWeight <- function(locationParameters, humanParameters, linkMatrix){
     dm = matrix(nrow = n_location, ncol = n_human, data = 0)
     for (i in 1:n_location){
         locationSum = locationParameters$Fl[i] + locationParameters$Dp[i] + locationParameters$Sl[i]
+        print(paste("location", i, ":", locationSum))
         for (j in 1:n_human){
             humanSum = humanParameters$Fh[j,i] + humanParameters$Du[j,i] + humanParameters$V[j,i] + humanParameters$As[j,i] + humanParameters$P[j,i]
             dm[i,j] = locationSum + humanSum
+            print(paste("human", j, ":", humanSum))
+            #print(paste("Total:", locationSum + humanSum))
         }
     }
     result <- as.data.frame(dm)
@@ -268,13 +271,19 @@ generateLinkWeight <- function(locationParameters, humanParameters, linkMatrix){
 }
 
 linkWeight <- generateLinkWeight(normLocParameters, normHumParameters, lnkMtrxH)
-linkWeight
+print(linkWeight)
+
+write.csv(linkWeight, "weight.csv")
 
 Hub = as.matrix(linkWeight) %*% t(linkWeight)
 Hub
 
+write.csv(Hub, "hub.csv")
+
 Authority = t(linkWeight)%*%as.matrix(linkWeight)
 Authority
+
+write.csv(Authority, "authority.csv")
 
 is_square_matrix <- function(A){
     return(nrow(A)==ncol(A))
@@ -324,5 +333,71 @@ ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector) 
 
-as.data.frame(vh[order(vh, decreasing = TRUE),])
-as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+humanRank
+locationRank
+
+uci_human <- read.csv('UCI_Auth.csv')
+uci_location <- read.csv('UCI_Hub.csv')
+uci_human
+uci_location
+
+uci_human$MHRb <- uci_human$MHRb/max(uci_human$MHRb)
+uci_location$MHRb <- uci_location$MHRb/max(uci_location$MHRb)
+uci_human
+uci_location
+
+human_compare <- merge(uci_human, humanRank, by='Human')
+location_compare <- merge(uci_location, locationRank, by='Location')
+human_compare$`MHRb - MHRbmc` <- human_compare$MHRb - human_compare$MHRbmc
+location_compare$`MHRb - MHRbmc` <- location_compare$MHRb - location_compare$MHRbmc
+human_compare$`(MHRb - MHRbmc)^2` <- (human_compare$`MHRb - MHRbmc`)^2
+location_compare$`(MHRb - MHRbmc)^2` <- (location_compare$`MHRb - MHRbmc`)^2
+human_compare
+print(paste("SUM of (MHR_B-MHR_BMCNet)^2:", sum(human_compare$`(MHRb - MHRbmc)^2`)))
+print(paste("RMSE:", sqrt(sum(human_compare$`(MHRb - MHRbmc)^2`)/length(human_compare$`(MHRb - MHRbmc)^2`))))
+location_compare
+print(paste("SUM of (MHR_B-MHR_BMCNet)^2:", sum(location_compare$`(MHRb - MHRbmc)^2`)))
+print(paste("RMSE:", sqrt(sum(location_compare$`(MHRb - MHRbmc)^2`)/length(location_compare$`(MHRb - MHRbmc)^2`))))
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+locationRank
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+location_compare_2
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
