@@ -451,8 +451,10 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wFl.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wFl.csv') # Replace here
+uci_human
+uci_location
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -524,8 +526,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wDP.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wDp.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -597,8 +599,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wSl.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wSl.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -679,8 +681,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wFh.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wFH.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -752,8 +754,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wDu.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wDu.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -825,8 +827,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wV.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wV.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -898,8 +900,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wAs.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wAs.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -971,8 +973,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wP.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wP.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1047,8 +1049,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO1.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO1.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1124,8 +1126,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO2.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO2.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1201,8 +1203,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO3.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO3.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1279,8 +1281,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO4.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO4.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1358,8 +1360,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO5.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO5.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1438,8 +1440,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO6.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO6.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1518,8 +1520,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO7.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO7.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1593,8 +1595,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO8.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO8.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1668,8 +1670,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO9.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO9.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
@@ -1748,8 +1750,8 @@ locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
 #locationRank
 
 ####
-uci_human <- read.csv('UCI_Auth.csv') #Replace here
-uci_location <- read.csv('UCI_Hub.csv') # Replace here
+uci_human <- read.csv('c_result/authority_wLMO10.csv') #Replace here
+uci_location <- read.csv('c_result/hub_wLMO10.csv') # Replace here
 names(uci_human)<-c("Human", "MHRb")
 names(uci_location)<-c("Location", "MHRb")
 
