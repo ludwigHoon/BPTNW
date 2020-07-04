@@ -344,8 +344,6 @@ names(locationRank) <- c('MHRbmc', 'Location')
 humanRank
 locationRank
 
-ih
-
 uci_human <- read.csv('UCI_Auth.csv')
 uci_location <- read.csv('UCI_Hub.csv')
 names(uci_human)<-c("Human", "MHRb")
