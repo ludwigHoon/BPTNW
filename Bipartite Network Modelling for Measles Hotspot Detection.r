@@ -2,15 +2,15 @@ location<-read.csv('location.csv')
 names(location)<-c('Location.Address', 'Latitude', 'Longitude', 'Population')
 location
 
-processLocation <- function(raw_location){
-    library(geosphere)
-    return(data.frame(distm(raw_location[,c('Longitude','Latitude')],fun = distVincentyEllipsoid)))
-}
+#processLocation <- function(raw_location){
+#    library(geosphere)
+#    return(data.frame(distm(raw_location[,c('Longitude','Latitude')],fun = distVincentyEllipsoid)))
+#}
 
-processedLocation<-processLocation(location)
-processedLocation
+#processedLocation<-processLocation(location)
+#processedLocation
 
-locationMarker<-data.frame(names(processedLocation),location[,'Location.Address'])
+locationMarker<-data.frame(paste("X", 1:nrow(location),sep=''),location[,'Location.Address'])
 names(locationMarker)<-c('marker', 'Location.Address')
 locationMarker
 
@@ -256,11 +256,11 @@ generateLinkWeight <- function(locationParameters, humanParameters, linkMatrix){
     dm = matrix(nrow = n_location, ncol = n_human, data = 0)
     for (i in 1:n_location){
         locationSum = locationParameters$Fl[i] + locationParameters$Dp[i] + locationParameters$Sl[i]
-        print(paste("location", i, ":", locationSum))
+        #print(paste("location", i, ":", locationSum))
         for (j in 1:n_human){
             humanSum = humanParameters$Fh[j,i] + humanParameters$Du[j,i] + humanParameters$V[j,i] + humanParameters$As[j,i] + humanParameters$P[j,i]
             dm[i,j] = locationSum + humanSum
-            print(paste("human", j, ":", humanSum))
+            #print(paste("human", j, ":", humanSum))
             #print(paste("Total:", locationSum + humanSum))
         }
     }
@@ -344,6 +344,8 @@ names(locationRank) <- c('MHRbmc', 'Location')
 humanRank
 locationRank
 
+ih
+
 uci_human <- read.csv('UCI_Auth.csv')
 uci_location <- read.csv('UCI_Hub.csv')
 uci_human
@@ -402,4 +404,436 @@ print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+linkWeight <- generateLinkWeight(new_normLocParameters, normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
 
+write.csv(Authority, "authority_wFl.csv")
+write.csv(Hub, "hub_wFl.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+linkWeight <- generateLinkWeight(new_normLocParameters, normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wDp.csv")
+write.csv(Hub, "hub_wDp.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+linkWeight <- generateLinkWeight(new_normLocParameters, normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wSl.csv")
+write.csv(Hub, "hub_wSl.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+#helper function to generate empty dataframe
+generateEmpty <- function(n_location, n_humans){
+    dm = matrix(ncol=n_location, nrow=n_humans, data=0)
+    result <- as.data.frame(dm)
+    row.names(result) <- c(paste("H",1:nrow(result), sep=''))
+    names(result) <- c(paste("L",1:length(names(result)), sep=''))
+    return(result)
+}
+
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wFh.csv")
+write.csv(Hub, "hub_wFh.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Du <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wDu.csv")
+write.csv(Hub, "hub_wDu.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normHumParameters <- normHumParameters
+new_normHumParameters$V <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wV.csv")
+write.csv(Hub, "hub_wV.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normHumParameters <- normHumParameters
+new_normHumParameters$As <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wAs.csv")
+write.csv(Hub, "hub_wAs.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normHumParameters <- normHumParameters
+new_normHumParameters$P <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wP.csv")
+write.csv(Hub, "hub_wP.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normHumParameters <- normHumParameters
+#new_normHumParameters$P <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO1.csv")
+write.csv(Hub, "hub_wLMO1.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+#new_normHumParameters$P <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO2.csv")
+write.csv(Hub, "hub_wLMO2.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO3.csv")
+write.csv(Hub, "hub_wLMO3.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+new_normHumParameters$Du <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO4.csv")
+write.csv(Hub, "hub_wLMO4.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+new_normHumParameters$Du <- generateEmpty(16,8)
+new_normHumParameters$V <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO5.csv")
+write.csv(Hub, "hub_wLMO5.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+new_normHumParameters$Du <- generateEmpty(16,8)
+new_normHumParameters$V <- generateEmpty(16,8)
+new_normHumParameters$As <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO6.csv")
+write.csv(Hub, "hub_wLMO6.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+new_normHumParameters$Du <- generateEmpty(16,8)
+new_normHumParameters$V <- generateEmpty(16,8)
+new_normHumParameters$P <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO7.csv")
+write.csv(Hub, "hub_wLMO7.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Du <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO8.csv")
+write.csv(Hub, "hub_wLMO8.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO9.csv")
+write.csv(Hub, "hub_wLMO9.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
+
+new_normLocParameters <- normLocParameters
+new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
+new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
+new_normHumParameters <- normHumParameters
+new_normHumParameters$Fh <- generateEmpty(16,8)
+new_normHumParameters$Du <- generateEmpty(16,8)
+new_normHumParameters$V <- generateEmpty(16,8)
+new_normHumParameters$As <- generateEmpty(16,8)
+new_normHumParameters$P <- generateEmpty(16,8)
+linkWeight <- generateLinkWeight(new_normLocParameters, new_normHumParameters, lnkMtrxH)
+Hub = as.matrix(linkWeight) %*% t(linkWeight)
+#Hub
+Authority = t(linkWeight)%*%as.matrix(linkWeight)
+#Authority
+
+write.csv(Authority, "authority_wLMO10.csv")
+write.csv(Hub, "hub_wLMO10.csv")
+
+k = 1000
+auth <- c(rep(1,nrow(Authority))) 
+hub <- c(rep(1,nrow(Hub))) 
+ip <- powerMethod(Hub,hub,10^-2,k)
+ih <- powerMethod(Authority,auth,10^-2,k)
+vp <- ip$vector/max(ip$vector) 
+vh <- ih$vector/max(ih$vector)
+vp
+vh
