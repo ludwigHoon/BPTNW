@@ -363,7 +363,7 @@ location_compare$`(MHRb - MHRbmc)^2` <- (location_compare$`MHRb - MHRbmc`)^2
 human_compare
 print(paste("SUM of (MHR_B-MHR_BMCNet)^2:", sum(human_compare$`(MHRb - MHRbmc)^2`)))
 print(paste("RMSE:", sqrt(sum(human_compare$`(MHRb - MHRbmc)^2`)/length(human_compare$`(MHRb - MHRbmc)^2`))))
-location_compare
+location_compare[order(as.numeric(gsub("L","", location_compare$Location))),]
 print(paste("SUM of (MHR_B-MHR_BMCNet)^2:", sum(location_compare$`(MHRb - MHRbmc)^2`)))
 print(paste("RMSE:", sqrt(sum(location_compare$`(MHRb - MHRbmc)^2`)/length(location_compare$`(MHRb - MHRbmc)^2`))))
 
@@ -399,5 +399,7 @@ human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
-location_compare_2
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+
+
