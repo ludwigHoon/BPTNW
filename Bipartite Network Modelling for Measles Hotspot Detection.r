@@ -348,6 +348,8 @@ ih
 
 uci_human <- read.csv('UCI_Auth.csv')
 uci_location <- read.csv('UCI_Hub.csv')
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
 uci_human
 uci_location
 
@@ -401,8 +403,10 @@ human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
 human_compare_2
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
 location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
@@ -425,6 +429,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
 linkWeight <- generateLinkWeight(new_normLocParameters, normHumParameters, lnkMtrxH)
@@ -446,6 +502,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
 linkWeight <- generateLinkWeight(new_normLocParameters, normHumParameters, lnkMtrxH)
@@ -466,6 +574,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 #helper function to generate empty dataframe
 generateEmpty <- function(n_location, n_humans){
@@ -497,6 +657,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normHumParameters <- normHumParameters
 new_normHumParameters$Du <- generateEmpty(16,8)
 linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
@@ -517,6 +729,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normHumParameters <- normHumParameters
 new_normHumParameters$V <- generateEmpty(16,8)
@@ -539,6 +803,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normHumParameters <- normHumParameters
 new_normHumParameters$As <- generateEmpty(16,8)
 linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
@@ -560,6 +876,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normHumParameters <- normHumParameters
 new_normHumParameters$P <- generateEmpty(16,8)
 linkWeight <- generateLinkWeight(normLocParameters, new_normHumParameters, lnkMtrxH)
@@ -580,6 +948,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
@@ -604,6 +1024,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
@@ -630,6 +1102,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
@@ -654,6 +1178,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
@@ -681,6 +1257,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
@@ -707,6 +1335,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
@@ -736,6 +1416,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Dp <- rep(0, length(new_normLocParameters$Dp))
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
@@ -764,6 +1496,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
 new_normHumParameters <- normHumParameters
@@ -787,6 +1571,58 @@ vh <- ih$vector/max(ih$vector)
 vp
 vh
 
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
+
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Sl <- rep(0, length(new_normLocParameters$Sl))
 new_normHumParameters <- normHumParameters
@@ -809,6 +1645,58 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
@@ -837,3 +1725,55 @@ vp <- ip$vector/max(ip$vector)
 vh <- ih$vector/max(ih$vector)
 vp
 vh
+
+humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
+locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
+humanRank$Human <- row.names(humanRank)
+row.names(humanRank)<-NULL
+locationRank$Location <- row.names(locationRank)
+row.names(locationRank)<-NULL
+names(humanRank) <- c('MHRbmc', 'Human')
+names(locationRank) <- c('MHRbmc', 'Location')
+
+#Human BMC
+humanRank$rank_bmc <- NA
+order.MHRb<-order(humanRank$MHRb)
+humanRank$rank_bmc[order.MHRb] <- nrow(humanRank):1
+#humanRank
+
+#Location BMC
+locationRank$rank_bmc <- NA
+order.MHRb<-order(locationRank$MHRb)
+locationRank$rank_bmc[order.MHRb] <- nrow(locationRank):1
+#locationRank
+
+####
+uci_human <- read.csv('UCI_Auth.csv') #Replace here
+uci_location <- read.csv('UCI_Hub.csv') # Replace here
+names(uci_human)<-c("Human", "MHRb")
+names(uci_location)<-c("Location", "MHRb")
+
+#Human UCI
+uci_human$rank_b <- NA
+order.MHRb<-order(uci_human$MHRb)
+uci_human$rank_b[order.MHRb] <- nrow(uci_human):1
+#uci_human
+
+#Location UCI
+uci_location$rank_b <- NA
+order.MHRb<-order(uci_location$MHRb)
+uci_location$rank_b[order.MHRb] <- nrow(uci_location):1
+#uci_location
+
+human_compare_2 <- merge(uci_human, humanRank, by='Human')
+location_compare_2 <- merge(uci_location, locationRank, by='Location')
+human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_b
+location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_b
+human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
+location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
+human_compare_2
+print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
+location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
