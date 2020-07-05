@@ -408,8 +408,8 @@ print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compar
 
 originalHumanRank <- humanRank
 originalLocationRank <- locationRank
-originalHumanRank
-originalLocationRank
+#originalHumanRank
+#originalLocationRank
 
 new_normLocParameters <- normLocParameters
 new_normLocParameters$Fl <- rep(0, length(new_normLocParameters$Fl))
@@ -429,8 +429,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -463,10 +463,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -488,8 +490,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -522,10 +524,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -547,8 +551,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -581,10 +585,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -615,8 +621,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -649,10 +655,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -674,8 +682,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -708,10 +716,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -733,8 +743,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -767,10 +777,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -792,8 +804,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -826,10 +838,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -851,8 +865,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -885,10 +899,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -913,8 +929,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -947,10 +963,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -976,8 +994,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1010,10 +1028,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1039,8 +1059,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1073,10 +1093,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1103,8 +1125,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1137,10 +1159,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1168,8 +1192,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1202,10 +1226,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1234,8 +1260,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1268,10 +1294,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1300,8 +1328,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1334,10 +1362,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1361,8 +1391,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1395,10 +1425,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
@@ -1422,8 +1454,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1456,11 +1488,12 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
-print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
 
 new_normLocParameters <- normLocParameters
@@ -1488,8 +1521,8 @@ ip <- powerMethod(Hub,hub,10^-2,k)
 ih <- powerMethod(Authority,auth,10^-2,k)
 vp <- ip$vector/max(ip$vector) 
 vh <- ih$vector/max(ih$vector)
-vp
-vh
+#vp
+#vh
 
 humanRank <- as.data.frame(vh[order(vh, decreasing = TRUE),])
 locationRank <- as.data.frame(vp[order(vp, decreasing = TRUE),])
@@ -1522,9 +1555,11 @@ human_compare_2$`d Rank` <- human_compare_2$rank_bmc - human_compare_2$rank_bmc_
 location_compare_2$`d Rank` <- location_compare_2$rank_bmc - location_compare_2$rank_bmc_new
 human_compare_2$`d Rank^2` <- (human_compare_2$`d Rank`)^2
 location_compare_2$`d Rank^2` <- (location_compare_2$`d Rank`)^2
-human_compare_2
+#human_compare_2
+print("---Human---")
 print(paste("Sum of d Rank^2:",sum(human_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(human_compare_2$`d Rank^2`))/(nrow(human_compare_2)*nrow(human_compare_2)**2-1))  ))
-location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+#location_compare_2[order(as.numeric(gsub("L","", location_compare_2$Location))),]
+print("---Location---")
 print(paste("Sum of d Rank^2:",sum(location_compare_2$`d Rank^2`)))
 print(paste("P:",1-((6*sum(location_compare_2$`d Rank^2`))/(nrow(location_compare_2)*nrow(location_compare_2)**2-1))  ))
